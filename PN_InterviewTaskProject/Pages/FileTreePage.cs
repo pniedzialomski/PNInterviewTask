@@ -39,6 +39,7 @@ public class FileTreePage(IWebDriver driver) : BasePage(driver)
 
     private void ExpandPathRecursively(string[] nodes, int index)
     {
+        //Stops before last object, as its not an expandable directory
         if (index >= nodes.Length - 1)
         {
             return;
