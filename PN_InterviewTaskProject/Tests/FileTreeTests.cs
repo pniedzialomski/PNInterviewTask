@@ -1,12 +1,19 @@
+using Allure.NUnit;
+using Allure.NUnit.Attributes;
+using Allure.Net.Commons;
 using PN_InterviewTaskProject.Framework;
 using PN_InterviewTaskProject.Pages;
 
 namespace PN_InterviewTaskProject.Tests;
 
 [TestFixture]
+[AllureNUnit]
+[AllureSuite("Tests for file tree component")]
 public class FileTreeTests : TestBase
 {
     [TestCase("/home/user/projects/README.md")]
+    [AllureName("Verifying file integrity in the directory tree of given path")]
+    [AllureDescription("Test expands given path in mat-tree component, verifies visibility of final file and takes a screenshot")]
     public void ExpandGivenPathAndTakeScreenshot(string path)
     {
         var leafName = path.Split('/').Last();
@@ -15,9 +22,11 @@ public class FileTreeTests : TestBase
         Assert.That(page.IsLeafVisible(leafName), Is.True, $"{leafName} should be visible after expanding given path");
         
         var screenshotDirectory = SaveScreenshotAtTestEnd();
+        Assert.That(screenshotDirectory, Is.Not.Null.And.Not.Empty, "Screenshot path should be returned");
         Assert.That(File.Exists(screenshotDirectory), $"{screenshotDirectory} does not exist");
+        AllureApi.AddAttachment("Tree screenshot", "image/png", screenshotDirectory!);
 
-        var fileInfo = new FileInfo(screenshotDirectory); 
+        var fileInfo = new FileInfo(screenshotDirectory!); 
         Assert.That(fileInfo.Length, Is.GreaterThan(0), $"{screenshotDirectory} is empty");
     }
 
@@ -25,6 +34,8 @@ public class FileTreeTests : TestBase
     [TestCase("/home/user/documents/taxes.pdf")]
     [TestCase("/usr/local/bin/docker")]
     [TestCase("/var/www/html/index.html")]
+    [AllureDescription("Getting the filename from the tree and generating the SHA256 sum")]
+    [AllureStep("Calculating the checksum")]
     public void CalculateCheckSumForVisibleFiles(string path)
     {
         var page = new FileTreePage(Driver!)

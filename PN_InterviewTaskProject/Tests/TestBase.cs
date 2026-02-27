@@ -1,8 +1,11 @@
 namespace PN_InterviewTaskProject.Tests;
 
 using System.IO;
+using Allure.Net.Commons;
 using OpenQA.Selenium;
 using PN_InterviewTaskProject.Driver;
+using NUnit.Framework.Interfaces;
+using System.Linq;
 
 public abstract class TestBase
 {
@@ -21,9 +24,23 @@ public abstract class TestBase
         {
             return;
         }
-        
-        Driver.Quit();
-        Driver.Dispose();
+
+        try
+        {
+            if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
+            {
+                var screenshotPath = SaveScreenshotAtTestEnd();
+                if (!string.IsNullOrWhiteSpace(screenshotPath) && File.Exists(screenshotPath))
+                {
+                    AllureApi.AddAttachment("Failure screenshot", "image/png", screenshotPath);
+                }
+            }
+        }
+        finally
+        {
+            Driver.Quit();
+            Driver.Dispose();
+        }
     }
 
     protected string? SaveScreenshotAtTestEnd()
@@ -37,7 +54,7 @@ public abstract class TestBase
             var outputDir = Path.Combine(TestContext.CurrentContext.WorkDirectory, "TestArtifacts");
             Directory.CreateDirectory(outputDir);
 
-            var testName = TestContext.CurrentContext.Test.Name;
+            var testName = TestContext.CurrentContext.Test.Name.Split('(')[0].Trim();
             var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             var outputPath = Path.Combine(outputDir, $"{testName}_{timestamp}.png");
 
