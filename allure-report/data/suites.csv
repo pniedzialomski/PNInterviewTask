@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Getting the filename from the tree and generating the SHA256 sum","1224","CalculateCheckSumForVisibleFiles","","2026-02-27","passed","2026-02-27","","Tests for file tree component","FileTreeTests","CalculateCheckSumForVisibleFiles"
+"Getting the filename from the tree and generating the SHA256 sum","1747","CalculateCheckSumForVisibleFiles","","2026-02-27","passed","2026-02-27","","Tests for file tree component","FileTreeTests","CalculateCheckSumForVisibleFiles"
+"Test expands given path in mat-tree component, verifies visibility of final file and takes a screenshot","1756","Verifying file integrity in the directory tree of given path","","2026-02-27","passed","2026-02-27","","Tests for file tree component","FileTreeTests","ExpandGivenPathAndTakeScreenshot"
+"Getting the filename from the tree and generating the SHA256 sum","1607","CalculateCheckSumForVisibleFiles","","2026-02-27","passed","2026-02-27","","Tests for file tree component","FileTreeTests","CalculateCheckSumForVisibleFiles"
+"Getting the filename from the tree and generating the SHA256 sum","1647","CalculateCheckSumForVisibleFiles","","2026-02-27","passed","2026-02-27","","Tests for file tree component","FileTreeTests","CalculateCheckSumForVisibleFiles"
